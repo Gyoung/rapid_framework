@@ -1,6 +1,7 @@
 import cn.org.rapid_framework.generator.GeneratorFacade;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -10,8 +11,10 @@ public class GeneTest {
 
     @Test
     public void test() throws Exception{
-        GeneratorFacade g = new GeneratorFacade();
-        g.deleteOutRootDir();
-        g.generateByAllTable();
+        GeneratorFacade facade = new GeneratorFacade();
+//        facade.getGenerator().setIncludes(getIncludes(args,1));
+        facade.getGenerator().addTemplateRootDir(new File("template"));
+        facade.deleteOutRootDir();
+        facade.generateByAllTable();
     }
 }
