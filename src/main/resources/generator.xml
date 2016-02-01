@@ -15,13 +15,19 @@
 	<entry key="outRoot">generator-output</entry>
 
 	<!--数据库相关设置-->
-	<entry key="jdbc_username">datahelper</entry>
-	<entry key="jdbc_password">1</entry>
-	<entry key="databaseType">mysql</entry>
+	<entry key="jdbc_username">sa</entry>
+	<entry key="jdbc_password">1qaz2wsx</entry>
+	<entry key="databaseType">sqlserver2005</entry>
 	<!--Mysql-->
-	<entry key="jdbc_url">jdbc:mysql://192.168.2.39:3306/demo?useUnicode=true&amp;characterEncoding=UTF-8</entry>
-	<entry key="jdbc_driver">com.mysql.jdbc.Driver</entry>
+<!--	<entry key="jdbc_url">jdbc:mysql://192.168.2.39:3306/demo?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+	<entry key="jdbc_driver">com.mysql.jdbc.Driver</entry>-->
 
+<!--	jdbc.url = jdbc\:sqlserver\://127.0.0.1\:1433;DatabaseName=Bill
+	<entry key="jdbc.url">jdbc:sqlserver://127.0.0.1:1433;DatabaseName=Bill</entry>
+	<entry key="jdbc.driver">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry>-->
+
+	<entry key="jdbc_url">jdbc:sqlserver://127.0.0.1:1433;DatabaseName=Bill</entry>
+	<entry key="jdbc_driver">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry>
 
 	<!-- Oracle-->
 <!--

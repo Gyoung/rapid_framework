@@ -15,6 +15,6 @@ public class GeneTest {
 //        facade.getGenerator().setIncludes(getIncludes(args,1));
         facade.getGenerator().addTemplateRootDir(new File("template"));
         facade.deleteOutRootDir();
-        facade.generateByAllTable();
+        facade.generateByTable("Country");
     }
 }

@@ -28,9 +28,14 @@
             <version>2.3.19</version>
         </dependency>
         <dependency>
-            <groupId>oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>12.1.0.1</version>
+            <groupId>com.ms.sqlserver</groupId>
+            <artifactId>sqljdbc</artifactId>
+            <version>42</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>oracle</groupId>-->
+            <!--<artifactId>ojdbc6</artifactId>-->
+            <!--<version>12.1.0.1</version>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

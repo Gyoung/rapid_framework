@@ -42,6 +42,11 @@ public class Column implements java.io.Serializable,Cloneable{
     private String _sqlName;
 
     /**
+     * The name of entity
+     */
+    private String _entityName;
+
+    /**
      * True if the column is a primary key
      */
     private boolean _isPk;
@@ -103,7 +108,7 @@ public class Column implements java.io.Serializable,Cloneable{
     public Column(Table table, int sqlType, String sqlTypeName,
                   String sqlName, int size, int decimalDigits, boolean isPk,
                   boolean isNullable, boolean isIndexed, boolean isUnique,
-                  String defaultValue,String remarks) {
+                  String defaultValue,String remarks,String entityName) {
         if(sqlName == null) throw new NullPointerException("sqlName must be not null");
         _table = table;
         _sqlType = sqlType;
@@ -117,6 +122,7 @@ public class Column implements java.io.Serializable,Cloneable{
         _isUnique = isUnique;
         _defaultValue = defaultValue;
         _remarks = remarks;
+        _entityName=entityName;
 
         GLogger.trace(sqlName + " isPk -> " + _isPk);
 
@@ -135,7 +141,8 @@ public class Column implements java.io.Serializable,Cloneable{
                 c.isIndexed(),
                 c.isUnique(),
                 c.getDefaultValue(),
-                c.getRemarks());
+                c.getRemarks(),
+                c.getEntityName());
     }
 
     public Column() {
@@ -202,6 +209,19 @@ public class Column implements java.io.Serializable,Cloneable{
             throw new IllegalArgumentException("cannot change property:sqlName value");
         }
         this._sqlName = v;
+    }
+
+    public String getEntityName() {
+        if(_entityName == null) throw new NullPointerException();
+        return _entityName;
+    }
+
+    public void setEntityName(String v) {
+        if(StringHelper.isBlank(v)) throw new IllegalArgumentException("sqlName must be not blank");
+        if(!v.equalsIgnoreCase(_entityName)) {
+            throw new IllegalArgumentException("cannot change property:sqlName value");
+        }
+        this._entityName = v;
     }
 
     /**

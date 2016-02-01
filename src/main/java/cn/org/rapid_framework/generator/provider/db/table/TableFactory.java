@@ -342,11 +342,18 @@ public class TableFactory {
                     int sqlType = columnRs.getInt("DATA_TYPE");
                     String sqlTypeName = columnRs.getString("TYPE_NAME");
                     String columnName = columnRs.getString("COLUMN_NAME");
+                    String entityName=StringHelper.toJavaClassName(columnName);
                     String columnDefaultValue = columnRs.getString("COLUMN_DEF");
 
                     String remarks = columnRs.getString("REMARKS");
                     if(remarks == null && DatabaseMetaDataUtils.isOracleDataBase(connection.getMetaData())) {
                         remarks = getOracleColumnComments(table.getSqlName(), columnName);
+                    }
+                    if(remarks==null&&DatabaseMetaDataUtils.isSqlServerDataBase(connection.getMetaData())){
+                        remarks=getSqlServerColumnComments(table.getSqlName(),columnName);
+                    }
+                    if(remarks==null){
+                        remarks="";
                     }
 
                     // if columnNoNulls or columnNullableUnknown assume "not nullable"
@@ -378,7 +385,8 @@ public class TableFactory {
                             isIndexed,
                             isUnique,
                             columnDefaultValue,
-                            remarks);
+                            remarks,
+                            entityName);
                     BeanHelper.copyProperties(column,TableOverrideValuesProvider.getColumnConfigValues(table,column));
                     columns.add(column);
                 }
@@ -428,6 +436,18 @@ public class TableFactory {
 
         private String getOracleColumnComments(String table,String column)  {
             String sql = "SELECT comments FROM user_col_comments WHERE table_name='"+table+"' AND column_name = '"+column+"'";
+            return ExecuteSqlHelper.queryForString(connection,sql);
+        }
+
+        private String getSqlServerColumnComments(String table,String column){
+            String sql="SELECT ISNULL(cast(ep.[value]   \n" +
+                    "as varchar(100)),'')\n" +
+                    "FROM sys.tables AS t  \n" +
+                    "INNER JOIN sys.columns   \n" +
+                    "AS c ON t.object_id = c.object_id  \n" +
+                    " LEFT JOIN sys.extended_properties AS ep   \n" +
+                    "ON ep.major_id = c.object_id AND ep.minor_id = c.column_id WHERE ep.class =1   \n" +
+                    "AND t.name='"+table+"' and c.name='"+column+"'";
             return ExecuteSqlHelper.queryForString(connection,sql);
         }
     }
@@ -529,6 +549,18 @@ public class TableFactory {
                 boolean ret = false;
                 ret = (metadata.getDatabaseProductName().toLowerCase()
                         .indexOf("mysql") != -1);
+                return ret;
+            }catch(SQLException s) {
+                return false;
+//              throw new RuntimeException(s);
+            }
+        }
+
+        public static boolean isSqlServerDataBase(DatabaseMetaData metadata) {
+            try {
+                boolean ret = false;
+                ret = (metadata.getDatabaseProductName().toLowerCase()
+                        .indexOf("sql server") != -1);
                 return ret;
             }catch(SQLException s) {
                 return false;
