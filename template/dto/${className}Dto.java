@@ -8,7 +8,7 @@ package ${basepackage}.dto;
  * @date ${now?string("yyyy-MM-dd")}
  * @version 1.0
  */
-public class ${className} extends CoreModel {
+public class ${className}Dto  {
 <#list table.columns as field>
     /** ${field.remarks} */
     private ${field.javaType} ${field.sqlName};
