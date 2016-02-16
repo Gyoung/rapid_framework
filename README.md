@@ -1,0 +1,3 @@
+# rapid_framework
+网上找的rapid_framework源码。用于自动生成pojo文件
+模板使用freemarker
